@@ -1,156 +1,283 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Balaji Chejarla - Robotics & Automation Portfolio</title>
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <style>
-        body {
-            font-family: 'Inter', sans-serif;
-        }
-        .profile-image-container {
-            position: relative;
-            display: inline-block;
-        }
-        .profile-image-name {
-            position: absolute;
-            bottom: 0;
-            left: 0;
-            width: 100%;
-            background-color: rgba(0, 0, 0, 0.6); /* Semi-transparent black */
-            color: white;
-            padding: 8px 0;
-            text-align: center;
-            border-bottom-left-radius: 100%;
-            border-bottom-right-radius: 100%;
-        }
-    </style>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Balaji Chejarla — Robotics & AI Portfolio</title>
+
+  <!-- Inter font -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+
+  <!-- Tailwind CDN (no build step) -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <style>
+    :root{
+      /* Blue-turquoise theme */
+      --accent-1: #0ea5a4; /* turquoise */
+      --accent-2: #0369a1; /* deep blue */
+      --muted: #64748b;
+      --bg: #f3f7fb;
+    }
+    html,body { font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background: var(--bg); color: #0f172a; }
+    a.accent { color: var(--accent-2); }
+    a.accent:hover { color: var(--accent-1); }
+    .chip { background: rgba(6,95,109,0.08); color: var(--accent-2); padding: .25rem .5rem; border-radius: .375rem; font-weight:600; font-size:.875rem; }
+    /* simple card shadow */
+    .card { box-shadow: 0 6px 18px rgba(8,15,46,0.06); }
+    /* small helpers */
+    .muted { color: var(--muted); }
+    /* hide profile photo area (user requested no photo) */
+    .profile-photo { display: none; }
+  </style>
 </head>
-<body class="bg-gray-100">
-    <div class="container mx-auto px-4 py-8">
-        <header class="text-center mb-12">
-            <h1 class="text-4xl font-semibold text-blue-700">Balaji Chejarla</h1>
-            <p class="text-xl text-gray-600 mt-2">Robotics and Automation Enthusiast</p>
-            <nav class="mt-4">
-                <a href="#about" class="text-blue-500 hover:text-blue-700 mr-4">About</a>
-                <a href="#projects" class="text-blue-500 hover:text-blue-700 mr-4">Projects</a>
-                <a href="#skills" class="text-blue-500 hover:text-blue-700 mr-4">Skills</a>
-                <a href="#experience" class="text-blue-500 hover:text-blue-700 mr-4">Experience</a>
-                <a href="#contact" class="text-blue-500 hover:text-blue-700">Contact</a>
-            </nav>
-        </header>
+<body>
+  <div class="max-w-5xl mx-auto px-6 py-10">
 
-        <section id="about" class="bg-white rounded-lg shadow-md p-8 mb-12">
-            <h2 class="text-3xl font-semibold text-gray-800 mb-6 text-center">About Me</h2>
-            <div class="flex flex-col md:flex-row items-center gap-8">
-                <div class="md:w-1/3 profile-image-container">
-                    <img src="wallpaperflare.com_wallpaper.jpg" alt="Balaji Chejarla" class="rounded-full shadow-lg w-64 h-64 mx-auto object-cover">
-                    <div class="profile-image-name rounded-b-full">Balaji Chejarla</div>
-                </div>
-                <div class="md:w-2/3">
-                    <p class="text-gray-700 text-lg mb-4">
-                        Seeking an internship in automation or robotics, leveraging my skills in software development, machine learning, and robotics to contribute to innovative and impactful projects.
-                    </p>
-                    <a href="balaji_chejarla.pdf" download="Balaji_Chejarla_Resume.pdf" class="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded">
-                        Download Resume
-                    </a>
-                </div>
+    <!-- Header -->
+    <header class="mb-8 text-center">
+      <h1 id="name" class="text-4xl font-extrabold tracking-tight text-[var(--accent-2)]">Balaji Chejarla</h1>
+      <p id="tagline" class="mt-1 text-lg muted">Robotics & AI · Researcher · Software</p>
+
+      <nav class="mt-5 flex justify-center gap-4 text-sm">
+        <a class="accent hover:underline" href="#about">About</a>
+        <a class="accent hover:underline" href="#projects">Projects</a>
+        <a class="accent hover:underline" href="#research">Research</a>
+        <a class="accent hover:underline" href="#books">Books</a>
+        <a class="accent hover:underline" href="#experience">Experience</a>
+        <a class="accent hover:underline" href="#blog">Blog</a>
+        <a class="accent hover:underline" href="#contact">Contact</a>
+      </nav>
+
+      <!-- social links rendered from data -->
+      <div id="socials" class="mt-4 flex justify-center gap-4"></div>
+    </header>
+
+    <!-- About -->
+    <section id="about" class="mb-8">
+      <div class="card bg-white rounded-lg p-6">
+        <div class="flex flex-col md:flex-row gap-6 items-start">
+          <!-- profile area intentionally hidden per request -->
+          <div class="profile-photo w-32 h-32 rounded-full bg-gray-200"></div>
+
+          <div class="flex-1">
+            <h2 class="text-2xl font-semibold text-[var(--accent-2)]">About</h2>
+            <p id="about-text" class="mt-3 text-gray-700 leading-relaxed"></p>
+
+            <div class="mt-4 flex gap-3 flex-wrap">
+              <a id="resume-link" class="inline-block chip" href="#" target="_blank" rel="noopener">Download Resume</a>
+              <a id="email-link" class="inline-block text-sm muted">Email</a>
             </div>
-        </section>
+          </div>
+        </div>
+      </div>
+    </section>
 
-        <section id="projects" class="bg-gray-100 rounded-lg shadow-md p-8 mb-12">
-            <h2 class="text-3xl font-semibold text-gray-800 mb-6 text-center">Projects</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-                <div class="bg-white rounded-lg shadow-md p-6">
-                    <h3 class="text-2xl font-semibold text-blue-600 mb-4">Personalized Companion Robot</h3>
-                    <p class="text-gray-700 mb-4">
-                        Real-time environment recognition, room-cleaning, voice-command-based web browsing, and utility functions.
-                    </p>
-                     <ul class="list-disc list-inside mb-4">
-                        <li>Technologies: Python, C++, OpenCV, ROS2, Gazebo, PyTorch</li>
-                     </ul>
-                    <a href="#" class="text-blue-500 hover:text-blue-700">Project Details</a>
-                </div>
-                <div class="bg-white rounded-lg shadow-md p-6">
-                    <h3 class="text-2xl font-semibold text-blue-600 mb-4">Dynamic Feedback Driven Fine-Tuning for Speech Emotion Recognition</h3>
-                    <p class="text-gray-700 mb-4">
-                        Implemented dynamic feedback, improving model accuracy by 7%.  Designed real-time learning rate adaptation.
-                    </p>
-                    <ul class="list-disc list-inside mb-4">
-                        <li>Technologies: Python, Tensorflow, pickle, sklearn</li>
-                     </ul>
-                    <a href="https://github.com/Chejarlabalaji2112/adaptive_ser" class="text-blue-500 hover:text-blue-700">Project Repo</a>
-                </div>
-                <div class="bg-white rounded-lg shadow-md p-6">
-                    <h3 class="text-2xl font-semibold text-blue-600 mb-4">Automation Tool for College Results</h3>
-                    <p class="text-gray-700 mb-4">
-                       Retrieves results from the college website and sends to telegram bot.
-                    </p>
-                    <ul class="list-disc list-inside mb-4">
-                         <li>Technologies: Python, Telegram API, SQLite3, BeautifulSoup4, urllib, pandas</li>
-                    </ul>
-                    <a href="https://github.com/Chejarlabalaji2112/results_automation">Project Repo</a>
-                </div>
+    <!-- Projects -->
+    <section id="projects" class="mb-8">
+      <div class="flex items-center justify-between mb-4">
+        <h2 class="text-2xl font-semibold text-[var(--accent-2)]">Projects</h2>
+        <p class="muted text-sm">Edit <code>data.js</code> to add a new project</p>
+      </div>
+
+      <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
+    </section>
+
+    <!-- Research -->
+    <section id="research" class="mb-8">
+      <h2 class="text-2xl font-semibold text-[var(--accent-2)] mb-3">Research & Publications</h2>
+      <div id="research-list" class="space-y-4"></div>
+    </section>
+
+    <!-- Books -->
+    <section id="books" class="mb-8">
+      <h2 class="text-2xl font-semibold text-[var(--accent-2)] mb-3">Books</h2>
+      <div id="books-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
+    </section>
+
+    <!-- Experience -->
+    <section id="experience" class="mb-8">
+      <h2 class="text-2xl font-semibold text-[var(--accent-2)] mb-3">Experience</h2>
+      <div id="experience-list" class="space-y-4"></div>
+    </section>
+
+    <!-- Blog -->
+    <section id="blog" class="mb-8">
+      <h2 class="text-2xl font-semibold text-[var(--accent-2)] mb-3">Blog / Posts</h2>
+      <div id="posts-list" class="space-y-4"></div>
+    </section>
+
+    <!-- Footer / Contact -->
+    <section id="contact" class="card bg-white rounded-lg p-6 text-center">
+      <h3 class="text-xl font-semibold text-[var(--accent-2)]">Get in touch</h3>
+      <p class="mt-2 muted" id="contact-info"></p>
+      <div class="mt-4 flex items-center justify-center gap-4">
+        <a id="github-btn" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200" target="_blank" rel="noopener">
+          <!-- GitHub SVG -->
+          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" class="muted"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 005.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2 .37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.22 2.2.82a7.6 7.6 0 012-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.19 0 .21.15.46.55.38A8 8 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
+          View on GitHub
+        </a>
+
+        <a id="linkedin-btn" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200" target="_blank" rel="noopener">
+          <!-- LinkedIn SVG -->
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="muted"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.49 6S0 4.88 0 3.5 1.12 1 2.49 1s2.49 1.12 2.49 2.5zM0 8.98h4.98V24H0V8.98zM8.98 8.98h4.78v2.05h.07c.67-1.26 2.31-2.6 4.75-2.6 5.08 0 6.02 3.34 6.02 7.68V24h-4.98v-7.34c0-1.75-.03-4-2.44-4-2.44 0-2.81 1.9-2.81 3.88V24H8.98V8.98z"/></svg>
+          LinkedIn
+        </a>
+      </div>
+      <p class="mt-4 muted text-sm">© <span id="copyright-year"></span> — Built for easy edits</p>
+    </section>
+
+  </div>
+
+  <!-- Data file (edit this file) -->
+  <script src="data.js"></script>
+
+  <!-- Render script: reads window.SITE_DATA and populates the page -->
+  <script>
+    (function () {
+      const d = window.SITE_DATA || {};
+
+      // Basic header items
+      document.getElementById('name').textContent = d.name || 'Your Name';
+      document.getElementById('tagline').textContent = d.tagline || 'Robotics & AI';
+      document.getElementById('about-text').innerHTML = d.about || '';
+
+      // Resume and email
+      const resumeLink = document.getElementById('resume-link');
+      if (d.resume) { resumeLink.href = d.resume; resumeLink.style.display = 'inline-block'; } else resumeLink.style.display = 'none';
+
+      const emailLink = document.getElementById('email-link');
+      if (d.email) { emailLink.innerHTML = `<a href="mailto:${d.email}" class="accent">${d.email}</a>`; }
+
+      // Socials
+      const socials = document.getElementById('socials');
+      socials.innerHTML = '';
+      (d.socials || []).forEach(s => {
+        const a = document.createElement('a');
+        a.href = s.href;
+        a.target = '_blank';
+        a.rel = 'noopener';
+        a.className = 'inline-flex items-center gap-2 px-3 py-1 rounded-md border border-transparent hover:bg-white';
+        a.innerHTML = (s.iconSvg || '') + `<span class="muted text-sm">${s.label}</span>`;
+        socials.appendChild(a);
+      });
+
+      // Projects
+      const projectsGrid = document.getElementById('projects-grid');
+      projectsGrid.innerHTML = '';
+      (d.projects || []).forEach(p => {
+        const card = document.createElement('article');
+        card.className = 'bg-white rounded-lg p-5 card';
+        card.innerHTML = `
+          <div class="flex items-start justify-between">
+            <h3 class="text-lg font-semibold text-[var(--accent-2)]">${p.title}</h3>
+            <div class="muted text-sm">${p.date || ''}</div>
+          </div>
+          <p class="mt-2 text-gray-700">${p.summary || ''}</p>
+          ${p.tags ? `<div class="mt-3 flex flex-wrap gap-2">${p.tags.map(t=>`<span class="chip">${t}</span>`).join('')}</div>` : ''}
+          <div class="mt-4 flex gap-3">
+            ${p.link ? `<a class="text-sm accent hover:underline" href="${p.link}" target="_blank" rel="noopener">Project Link</a>` : ''}
+            ${p.repo ? `<a class="text-sm accent hover:underline" href="${p.repo}" target="_blank" rel="noopener">Repo</a>` : ''}
+          </div>
+        `;
+        projectsGrid.appendChild(card);
+      });
+
+      // Research
+      const researchList = document.getElementById('research-list');
+      researchList.innerHTML = '';
+      (d.research || []).forEach(r => {
+        const el = document.createElement('div');
+        el.className = 'bg-white p-4 rounded-lg card';
+        el.innerHTML = `
+          <div class="flex justify-between items-start">
+            <div>
+              <h4 class="font-semibold">${r.title}</h4>
+              <div class="muted text-sm">${r.venue || ''} · ${r.year || ''}</div>
             </div>
-        </section>
+            <div class="text-sm"><a class="accent" href="${r.link || '#'}" target="_blank" rel="noopener">PDF / Details</a></div>
+          </div>
+          ${r.abstract ? `<p class="mt-3 text-gray-700">${r.abstract}</p>` : ''}
+        `;
+        researchList.appendChild(el);
+      });
 
-        <section id="skills" class="bg-white rounded-lg shadow-md p-8 mb-12">
-            <h2 class="text-3xl font-semibold text-gray-800 mb-6 text-center">Skills</h2>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
-                <div>
-                    <h4 class="text-xl font-semibold text-gray-700 mb-3">Programming & Frameworks</h4>
-                    <ul class="list-disc list-inside text-gray-600">
-                        <li>Python, C++, Java, TensorFlow, PyTorch, Flask, Streamlit</li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-xl font-semibold text-gray-700 mb-3">Robotics & Simulation</h4>
-                    <ul class="list-disc list-inside text-gray-600">
-                        <li>ROS2, Gazebo, OpenCV</li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-xl font-semibold text-gray-700 mb-3">Data Analysis & Visualization</h4>
-                    <ul class="list-disc list-inside text-gray-600">
-                        <li>Pandas, Matplotlib, NumPy</li>
-                    </ul>
-                </div>
-                <div>
-                    <h4 class="text-xl font-semibold text-gray-700 mb-3">Tools & Platforms</h4>
-                    <ul class="list-disc list-inside text-gray-600">
-                        <li>Git, GitHub, Jupyter Notebook, PyCharm, VS Code, Anaconda</li>
-                    </ul>
-                </div>
+      // Books
+      const booksList = document.getElementById('books-list');
+      booksList.innerHTML = '';
+      (d.books || []).forEach(b => {
+        const el = document.createElement('div');
+        el.className = 'bg-white p-4 rounded-lg card';
+        el.innerHTML = `
+          <h4 class="font-semibold">${b.title}</h4>
+          <div class="muted text-sm">${b.publisher || ''} · ${b.year || ''}</div>
+          <p class="mt-2 text-gray-700">${b.desc || ''}</p>
+          ${b.link ? `<div class="mt-3"><a class="accent" href="${b.link}" target="_blank" rel="noopener">More</a></div>` : ''}
+        `;
+        booksList.appendChild(el);
+      });
+
+      // Experience
+      const expList = document.getElementById('experience-list');
+      expList.innerHTML = '';
+      (d.experience || []).forEach(e => {
+        const el = document.createElement('div');
+        el.className = 'bg-white p-4 rounded-lg card';
+        el.innerHTML = `
+          <div class="flex justify-between items-start">
+            <div>
+              <h4 class="font-semibold">${e.role} @ ${e.company}</h4>
+              <div class="muted text-sm">${e.period} · ${e.location || ''}</div>
             </div>
-        </section>
+          </div>
+          ${e.summary ? `<ul class="mt-3 list-disc list-inside text-gray-700">${(e.summary || []).map(i=>`<li>${i}</li>`).join('')}</ul>` : ''}
+        `;
+        expList.appendChild(el);
+      });
 
-        <section id="experience" class="bg-gray-100 rounded-lg shadow-md p-8 mb-12">
-            <h2 class="text-3xl font-semibold text-gray-800 mb-6 text-center">Work Experience</h2>
-            <div class="bg-white rounded-lg shadow-md p-6 mb-4">
-                <h3 class="text-2xl font-semibold text-blue-600 mb-2">Python Developer Intern - CG Innovations</h3>
-                <p class="text-gray-600 mb-2">Sep 2024 - Nov 2024</p>
-                <ul class="list-disc list-inside text-gray-700">
-                    <li>Created and maintained Python scripts for data processing, automation, and application development.</li>
-                    <li>Automated tasks, reducing processing time by 20%.</li>
-                    <li>Processed and analyzed datasets of size up to 3 GB.</li>
-                </ul>
-            </div>
-        </section>
+      // Blog / posts
+      const postsList = document.getElementById('posts-list');
+      postsList.innerHTML = '';
+      (d.posts || []).forEach(p => {
+        const el = document.createElement('div');
+        el.className = 'bg-white p-4 rounded-lg card';
+        el.innerHTML = `
+          <div class="flex justify-between items-start">
+            <h4 class="font-semibold">${p.title}</h4>
+            <div class="muted text-sm">${p.date || ''}</div>
+          </div>
+          <p class="mt-2 text-gray-700">${p.excerpt || ''}</p>
+          ${p.link ? `<div class="mt-3"><a class="accent" href="${p.link}" target="_blank" rel="noopener">Read more</a></div>` : ''}
+        `;
+        postsList.appendChild(el);
+      });
 
-        <section id="contact" class="bg-white rounded-lg shadow-md p-8 mb-12 text-center">
-            <h2 class="text-3xl font-semibold text-gray-800 mb-6">Contact Me</h2>
-            <p class="text-xl text-gray-600 mb-4">Email: balajichejarla02@gmail.com | Phone: +91 7995498925</p>
-            <a href="https://www.linkedin.com/in/your-linkedin-profile" target="_blank" rel="noopener noreferrer" class="text-blue-500 hover:text-blue-700 text-lg">LinkedIn</a>
-        </section>
+      // contact & footer
+      const contactInfo = document.getElementById('contact-info');
+      contactInfo.innerHTML = '';
+      if (d.email) contactInfo.innerHTML += `<div>Email: <a class="accent" href="mailto:${d.email}">${d.email}</a></div>`;
+      if (d.phone) contactInfo.innerHTML += `<div>Phone: <span class="muted">${d.phone}</span></div>`;
 
-        <footer class="text-center text-gray-500 py-4">
-            <p>&copy; 2025 Balaji Chejarla. All rights reserved.</p>
-        </footer>
-    </div>
+      const githubBtn = document.getElementById('github-btn');
+      if (d.github) githubBtn.href = d.github; else githubBtn.style.display = 'none';
+
+      const linkedinBtn = document.getElementById('linkedin-btn');
+      if (d.linkedin) linkedinBtn.href = d.linkedin; else linkedinBtn.style.display = 'none';
+
+      // Social icon fallbacks: if no socials are provided, show small defaults
+      if ((d.socials || []).length === 0) {
+        socials.innerHTML = `
+          <a class="accent" href="${d.github || '#'}" target="_blank">GitHub</a>
+          <a class="accent ml-3" href="${d.linkedin || '#'}" target="_blank">LinkedIn</a>
+          ${d.x ? `<a class="accent ml-3" href="${d.x}" target="_blank">X</a>` : ''}
+        `;
+      }
+
+      // copyright year
+      document.getElementById('copyright-year').textContent = new Date().getFullYear();
+    })();
+  </script>
 </body>
 </html>
-
