@@ -1,283 +1,513 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width,initial-scale=1" />
-  <title>Balaji Chejarla — Robotics & AI Portfolio</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Balaji Chejarla | AI & Robotics Researcher</title>
+    
+    <!-- Google Fonts: Inter for clean, professional typography -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;800&display=swap" rel="stylesheet">
 
-  <!-- Inter font -->
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+    <style>
+        /* --- CSS VARIABLES --- */
+        :root {
+            --bg-body: #ffffff;
+            --bg-card: #f8f9fa;
+            --bg-hover: #f1f3f5; /* Light gray for hover */
+            --text-main: #1a1a1a;
+            --text-muted: #555555;
+            --accent: #00ced1; /* Turquoise */
+            --accent-dark: #008b8b;
+            --border: #e5e7eb;
+            --font-main: 'Inter', sans-serif;
+            --max-width: 850px;
+            --modal-overlay: rgba(0, 0, 0, 0.5);
+        }
 
-  <!-- Tailwind CDN (no build step) -->
-  <script src="https://cdn.tailwindcss.com"></script>
+        /* DARK MODE */
+        body.dark-mode {
+            --bg-body: #121212;
+            --bg-card: #1e1e1e;
+            --bg-hover: #252525; /* Dark gray for hover */
+            --text-main: #e0e0e0;
+            --text-muted: #a0a0a0;
+            --border: #333333;
+            --modal-overlay: rgba(0, 0, 0, 0.8);
+        }
 
-  <style>
-    :root{
-      /* Blue-turquoise theme */
-      --accent-1: #0ea5a4; /* turquoise */
-      --accent-2: #0369a1; /* deep blue */
-      --muted: #64748b;
-      --bg: #f3f7fb;
-    }
-    html,body { font-family: 'Inter', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial; background: var(--bg); color: #0f172a; }
-    a.accent { color: var(--accent-2); }
-    a.accent:hover { color: var(--accent-1); }
-    .chip { background: rgba(6,95,109,0.08); color: var(--accent-2); padding: .25rem .5rem; border-radius: .375rem; font-weight:600; font-size:.875rem; }
-    /* simple card shadow */
-    .card { box-shadow: 0 6px 18px rgba(8,15,46,0.06); }
-    /* small helpers */
-    .muted { color: var(--muted); }
-    /* hide profile photo area (user requested no photo) */
-    .profile-photo { display: none; }
-  </style>
+        /* --- RESET & BASE --- */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        body {
+            font-family: var(--font-main);
+            background-color: var(--bg-body);
+            color: var(--text-main);
+            line-height: 1.7;
+            transition: background 0.3s, color 0.3s;
+            overflow-x: hidden; /* Prevent horizontal scroll */
+        }
+        a { text-decoration: none; color: var(--text-main); transition: color 0.2s; }
+        a:hover { color: var(--accent); }
+        
+        /* --- LAYOUT UTILS --- */
+        .container { max-width: var(--max-width); margin: 0 auto; padding: 0 1.5rem; }
+        .section { margin-bottom: 5rem; }
+        .flex-between { display: flex; justify-content: space-between; align-items: center; }
+        
+        /* --- HEADER --- */
+        nav {
+            padding: 2rem 0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 3rem;
+        }
+        .logo { font-weight: 800; font-size: 1.2rem; letter-spacing: -0.5px; }
+        .mode-toggle {
+            background: none; border: 1px solid var(--border); color: var(--text-main);
+            padding: 0.5rem 1rem; border-radius: 50px; cursor: pointer; font-size: 0.85rem;
+        }
+        .mode-toggle:hover { border-color: var(--accent); color: var(--accent); }
+
+        /* --- HERO SECTION --- */
+        .hero h1 {
+            font-size: 3rem;
+            font-weight: 800;
+            letter-spacing: -1px;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+        .hero p { font-size: 1.15rem; color: var(--text-muted); max-width: 600px; }
+        .status-badge {
+            display: inline-block; background-color: rgba(0, 206, 209, 0.1); 
+            color: var(--accent-dark); padding: 0.25rem 0.75rem; border-radius: 4px;
+            font-size: 0.85rem; font-weight: 600; margin-bottom: 1.5rem;
+        }
+
+        /* --- SECTIONS HEADINGS --- */
+        h2 {
+            font-size: 0.9rem; text-transform: uppercase; letter-spacing: 1.5px;
+            color: var(--text-muted); margin-bottom: 2rem; border-bottom: 1px solid var(--border);
+            padding-bottom: 1rem; display: flex; align-items: center;
+        }
+        h2::before {
+            content: ''; display: block; width: 8px; height: 8px; background: var(--accent);
+            margin-right: 10px; border-radius: 50%;
+        }
+
+        /* --- CONTENT GRID & INTERACTIVE ITEMS --- */
+        .grid-list { display: grid; gap: 1rem; } /* Reduced gap to fit hover cards */
+        
+        .item { 
+            display: grid; 
+            grid-template-columns: 1fr 3fr; 
+            gap: 2rem; 
+            padding: 1.5rem; /* Added padding for card feel */
+            border-radius: 12px; /* Rounded corners */
+            border: 1px solid transparent; /* Invisible border prevents layout shift */
+            transition: all 0.2s ease-in-out;
+            cursor: pointer;
+            text-decoration: none; /* For anchor tags wrapping items */
+        }
+
+        /* HOVER EFFECT: Card Highlight */
+        .item:hover {
+            background-color: var(--bg-hover);
+            transform: scale(1.01); /* Subtle scale up */
+            border-color: var(--border);
+        }
+
+        .item-meta { font-size: 0.9rem; color: var(--text-muted); font-feature-settings: "tnum"; }
+        .item-content h3 { font-size: 1.25rem; font-weight: 600; margin-bottom: 0.5rem; color: var(--text-main); }
+        .item-content p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.75rem; }
+        
+        /* SKILL TAGS */
+        .tags { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.5rem; }
+        .tag {
+            font-size: 0.75rem; border: 1px solid var(--border); padding: 2px 8px;
+            border-radius: 4px; color: var(--text-muted);
+        }
+
+        /* LINKS */
+        .link-arrow { font-weight: 600; font-size: 0.9rem; display: inline-flex; align-items: center; color: var(--accent-dark); }
+        .link-arrow::after { content: '→'; margin-left: 5px; transition: transform 0.2s; }
+        .link-arrow:hover::after { transform: translateX(3px); }
+
+        /* --- MODAL (For reading posts) --- */
+        .modal-overlay {
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            background: var(--modal-overlay); backdrop-filter: blur(4px);
+            display: none; justify-content: center; align-items: center; z-index: 1000;
+            opacity: 0; transition: opacity 0.3s ease;
+        }
+        .modal-overlay.active { display: flex; opacity: 1; }
+        
+        .modal-content {
+            background: var(--bg-body); color: var(--text-main);
+            width: 90%; max-width: 700px; max-height: 85vh;
+            padding: 3rem; border-radius: 16px;
+            overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.2);
+            position: relative; transform: translateY(20px); transition: transform 0.3s ease;
+            border: 1px solid var(--border);
+        }
+        .modal-overlay.active .modal-content { transform: translateY(0); }
+        
+        .modal-close {
+            position: absolute; top: 1.5rem; right: 1.5rem;
+            background: none; border: none; font-size: 1.5rem;
+            cursor: pointer; color: var(--text-muted);
+        }
+        .modal-close:hover { color: var(--accent); }
+        
+        .modal-body h3 { margin-bottom: 1rem; font-size: 1.8rem; }
+        .modal-body .meta { font-size: 0.9rem; color: var(--text-muted); margin-bottom: 2rem; display: block; border-bottom: 1px solid var(--border); padding-bottom: 1rem; }
+        .modal-body p { margin-bottom: 1.5rem; line-height: 1.8; }
+
+        /* --- CONTACT & FOOTER --- */
+        .contact-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 1rem;
+            background: var(--bg-card); padding: 2rem; border-radius: 8px;
+        }
+        .contact-item { display: flex; flex-direction: column; }
+        .contact-label { font-size: 0.8rem; color: var(--text-muted); margin-bottom: 0.25rem; }
+        .contact-val { font-weight: 600; }
+        
+        footer { 
+            text-align: center; padding: 4rem 0; font-size: 0.85rem; color: var(--text-muted);
+            border-top: 1px solid var(--border); margin-top: 4rem;
+        }
+
+        /* --- RESPONSIVE --- */
+        @media (max-width: 768px) {
+            .item { grid-template-columns: 1fr; gap: 0.5rem; padding: 1rem; }
+            .hero h1 { font-size: 2.2rem; }
+            .item-meta { color: var(--accent-dark); font-weight: 600; margin-bottom: 0.25rem; }
+            .modal-content { padding: 1.5rem; }
+        }
+
+        /* --- PRINT STYLES --- */
+        @media print {
+            .mode-toggle, .link-arrow::after, footer, .modal-overlay { display: none; }
+            body { background: white; color: black; }
+            .container { max-width: 100%; padding: 0; }
+            .section { margin-bottom: 2rem; }
+            .item { border: none; padding: 0; }
+            a { text-decoration: none; color: black; }
+            .status-badge { border: 1px solid #ccc; color: black; background: none; }
+        }
+    </style>
 </head>
 <body>
-  <div class="max-w-5xl mx-auto px-6 py-10">
 
-    <!-- Header -->
-    <header class="mb-8 text-center">
-      <h1 id="name" class="text-4xl font-extrabold tracking-tight text-[var(--accent-2)]">Balaji Chejarla</h1>
-      <p id="tagline" class="mt-1 text-lg muted">Robotics & AI · Researcher · Software</p>
-
-      <nav class="mt-5 flex justify-center gap-4 text-sm">
-        <a class="accent hover:underline" href="#about">About</a>
-        <a class="accent hover:underline" href="#projects">Projects</a>
-        <a class="accent hover:underline" href="#research">Research</a>
-        <a class="accent hover:underline" href="#books">Books</a>
-        <a class="accent hover:underline" href="#experience">Experience</a>
-        <a class="accent hover:underline" href="#blog">Blog</a>
-        <a class="accent hover:underline" href="#contact">Contact</a>
-      </nav>
-
-      <!-- social links rendered from data -->
-      <div id="socials" class="mt-4 flex justify-center gap-4"></div>
-    </header>
-
-    <!-- About -->
-    <section id="about" class="mb-8">
-      <div class="card bg-white rounded-lg p-6">
-        <div class="flex flex-col md:flex-row gap-6 items-start">
-          <!-- profile area intentionally hidden per request -->
-          <div class="profile-photo w-32 h-32 rounded-full bg-gray-200"></div>
-
-          <div class="flex-1">
-            <h2 class="text-2xl font-semibold text-[var(--accent-2)]">About</h2>
-            <p id="about-text" class="mt-3 text-gray-700 leading-relaxed"></p>
-
-            <div class="mt-4 flex gap-3 flex-wrap">
-              <a id="resume-link" class="inline-block chip" href="#" target="_blank" rel="noopener">Download Resume</a>
-              <a id="email-link" class="inline-block text-sm muted">Email</a>
+    <div class="container">
+        <!-- NAV -->
+        <nav>
+            <div class="logo">B. Chejarla</div>
+            <div style="display:flex; gap:1rem; align-items:center;">
+                <a href="#contact" style="font-size:0.9rem;">Contact</a>
+                <button class="mode-toggle" onclick="toggleTheme()">Mode</button>
             </div>
-          </div>
+        </nav>
+
+        <!-- HERO -->
+        <section class="section hero">
+            <div class="status-badge">Researcher & Engineer</div>
+            <h1 id="profile-name"></h1>
+            <p id="profile-intro"></p>
+        </section>
+
+        <!-- EDUCATION -->
+        <section class="section">
+            <h2>Education</h2>
+            <div class="grid-list" id="education-list">
+                <!-- JS Injected -->
+            </div>
+        </section>
+
+        <!-- EXPERIENCE -->
+        <section class="section">
+            <h2>Research & Experience</h2>
+            <div class="grid-list" id="experience-list">
+                <!-- JS Injected -->
+            </div>
+        </section>
+
+        <!-- PROJECTS -->
+        <section class="section">
+            <h2>Selected Projects</h2>
+            <div class="grid-list" id="project-list">
+                <!-- JS Injected -->
+            </div>
+        </section>
+
+        <!-- PUBLICATIONS & WRITING -->
+        <section class="section" id="writing-section">
+            <h2>Writing & Publications</h2>
+            <div class="grid-list" id="publications-list">
+                <!-- JS Injected -->
+            </div>
+        </section>
+
+        <!-- SKILLS -->
+        <section class="section">
+            <h2>Technical Arsenal</h2>
+            <div id="skills-list" style="display: flex; flex-wrap: wrap; gap: 0.75rem;">
+                <!-- JS Injected -->
+            </div>
+        </section>
+
+        <!-- CONTACT -->
+        <section id="contact" class="section">
+            <h2>Get in Touch</h2>
+            <div class="contact-grid">
+                <div class="contact-item">
+                    <span class="contact-label">Email</span>
+                    <a id="email-link" class="contact-val"></a>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-label">Social</span>
+                    <div id="social-links"></div>
+                </div>
+                <div class="contact-item">
+                    <span class="contact-label">Location</span>
+                    <span class="contact-val">Bengaluru, Karnataka</span>
+                </div>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; <span id="year"></span> Balaji Chejarla. <br>Designed for Web & Print.</p>
+        </footer>
+    </div>
+
+    <!-- READ POST MODAL -->
+    <div class="modal-overlay" id="post-modal" onclick="closeModal(event)">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal(event)">×</button>
+            <div class="modal-body" id="modal-body-content">
+                <!-- Content injected here -->
+            </div>
         </div>
-      </div>
-    </section>
+    </div>
 
-    <!-- Projects -->
-    <section id="projects" class="mb-8">
-      <div class="flex items-center justify-between mb-4">
-        <h2 class="text-2xl font-semibold text-[var(--accent-2)]">Projects</h2>
-        <p class="muted text-sm">Edit <code>data.js</code> to add a new project</p>
-      </div>
+    <script>
+        /* ================================================
+           🟢 CONTENT MANAGEMENT SYSTEM 
+           Edit this data to update your portfolio instantly.
+           ================================================
+        */
 
-      <div id="projects-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5"></div>
-    </section>
+        const data = {
+            profile: {
+                name: "Balaji Chejarla",
+                role: "Agentic AI & Robotics Researcher",
+                about: "Specializing in Neuro-symbolic AI, Cognitive Architectures, and World Models. Passionate about building adaptive intelligence that integrates genuine understanding and common sense, moving beyond simple statistical correlation.",
+                email: "balajichejarla02@gmail.com",
+                linkedin: "https://linkedin.com", 
+                github: "https://github.com"
+            },
+            education: [
+                {
+                    degree: "B.Tech in Computer Science (AI & ML)",
+                    school: "Siddharth Institute of Engineering & Technology",
+                    year: "2021 - 2025",
+                    details: "CGPA: 9.06/10. Capstone Project Winner (Speech Emotion Recognition)."
+                }
+            ],
+            experience: [
+                {
+                    role: "Robotics Software Engineer Trainee",
+                    company: "BotForge Labs (IIT Madras Research Park)",
+                    period: "May 2025 - Aug 2025",
+                    desc: "Fine-tuned Vision Language Action (VLA) models and built MuJoCo digital twins for real-time task validation. Refactored LeRobot framework and reduced data collection time by 70% using synthetic environments."
+                },
+                {
+                    role: "Independent Researcher",
+                    company: "Self-Guided Study",
+                    period: "Present",
+                    desc: "Investigating JEPA, Hyperon, and NARS architectures. Analyzing limitations of LLMs in causal reasoning and exploring integration of neuro-symbolic AI."
+                }
+            ],
+            projects: [
+                {
+                    title: "Personalized Companion Robot",
+                    stack: ["ROS2", "LangChain", "C++", "OpenCV"],
+                    desc: "An adaptive robot with voice-to-voice communication. Focuses on causal understanding to avoid 'AI hacks' and ensure genuine interaction.",
+                    link: "#"
+                },
+                {
+                    title: "Adaptive Speech Emotion Recognition",
+                    stack: ["TensorFlow", "Python", "Scikit-learn"],
+                    desc: "Dynamic feedback mechanism improving accuracy by 7% with real-time learning rate adaptation. Optimized for low-overhead CPU utilization.",
+                    link: "#"
+                }
+            ],
+            // 🆕 NEW SECTION: Mix of Direct Text posts and External Links
+            publications: [
+                {
+                    title: "The Future of World Models in Robotics",
+                    date: "In Progress",
+                    type: "text", // 'text' opens modal, 'link' opens new tab
+                    source: "Research Draft",
+                    // For 'text' type, put the full blog post here. You can use HTML tags like <p>, <br>, <ul>.
+                    content: `
+                        <p>One of the biggest challenges in modern robotics is generalization. While RL (Reinforcement Learning) has shown promise, it often requires millions of interactions. This is where World Models come in.</p>
+                        <p><strong>What is a World Model?</strong><br>Essentially, it allows an agent to simulate the future outcomes of its actions within a latent space, rather than the real world. This is akin to how humans "imagine" consequences before acting.</p>
+                        <p>I am currently investigating how JEPA (Joint Embedding Predictive Architecture) can be applied to low-compute robotic arms to allow them to learn physics interactions without explicit programming.</p>
+                        <p><em>(This is a draft placeholder. Edit the data variable to add your full thoughts.)</em></p>
+                    `
+                },
+                {
+                    title: "Understanding Neuro-symbolic AI",
+                    date: "Oct 2024",
+                    type: "link",
+                    source: "Medium",
+                    url: "https://medium.com" // Replace with actual link
+                },
+                {
+                    title: "BotForge Labs: My Internship Experience",
+                    date: "Aug 2025",
+                    type: "text",
+                    source: "Personal Blog",
+                    content: `
+                        <p>Working at IIT Madras Research Park was a transformative experience. My primary focus was on the LeRobot framework.</p>
+                        <p>We faced a significant bottleneck in data collection for the robotic arms. By designing a custom synthetic environment in MuJoCo, we were able to train the VLA models on sim data before fine-tuning on real hardware.</p>
+                        <p>This approach reduced our physical data collection requirement by nearly 70%.</p>
+                    `
+                }
+            ],
+            skills: [
+                "Python", "C++", "TensorFlow", "PyTorch", "ROS2", "Gazebo", 
+                "MuJoCo", "LeRobot", "Computer Vision", "Agentic AI", "Git"
+            ]
+        };
 
-    <!-- Research -->
-    <section id="research" class="mb-8">
-      <h2 class="text-2xl font-semibold text-[var(--accent-2)] mb-3">Research & Publications</h2>
-      <div id="research-list" class="space-y-4"></div>
-    </section>
+        /* ================================================
+           🔴 RENDER LOGIC (Do not touch below)
+           ================================================
+        */
 
-    <!-- Books -->
-    <section id="books" class="mb-8">
-      <h2 class="text-2xl font-semibold text-[var(--accent-2)] mb-3">Books</h2>
-      <div id="books-list" class="grid grid-cols-1 md:grid-cols-2 gap-4"></div>
-    </section>
+        // Render Header
+        document.getElementById('profile-name').innerText = data.profile.name;
+        document.getElementById('profile-intro').innerText = data.profile.about;
 
-    <!-- Experience -->
-    <section id="experience" class="mb-8">
-      <h2 class="text-2xl font-semibold text-[var(--accent-2)] mb-3">Experience</h2>
-      <div id="experience-list" class="space-y-4"></div>
-    </section>
+        // Render Education
+        const eduContainer = document.getElementById('education-list');
+        data.education.forEach(edu => {
+            eduContainer.innerHTML += `
+                <div class="item">
+                    <div class="item-meta">${edu.year}</div>
+                    <div class="item-content">
+                        <h3>${edu.degree}</h3>
+                        <p>${edu.school}</p>
+                        <p style="font-size:0.85rem; opacity:0.8;">${edu.details}</p>
+                    </div>
+                </div>
+            `;
+        });
 
-    <!-- Blog -->
-    <section id="blog" class="mb-8">
-      <h2 class="text-2xl font-semibold text-[var(--accent-2)] mb-3">Blog / Posts</h2>
-      <div id="posts-list" class="space-y-4"></div>
-    </section>
+        // Render Experience
+        const expContainer = document.getElementById('experience-list');
+        data.experience.forEach(job => {
+            expContainer.innerHTML += `
+                <div class="item">
+                    <div class="item-meta">${job.period}</div>
+                    <div class="item-content">
+                        <h3>${job.role}</h3>
+                        <p><strong>${job.company}</strong></p>
+                        <p>${job.desc}</p>
+                    </div>
+                </div>
+            `;
+        });
 
-    <!-- Footer / Contact -->
-    <section id="contact" class="card bg-white rounded-lg p-6 text-center">
-      <h3 class="text-xl font-semibold text-[var(--accent-2)]">Get in touch</h3>
-      <p class="mt-2 muted" id="contact-info"></p>
-      <div class="mt-4 flex items-center justify-center gap-4">
-        <a id="github-btn" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200" target="_blank" rel="noopener">
-          <!-- GitHub SVG -->
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="currentColor" class="muted"><path d="M8 0C3.58 0 0 3.58 0 8a8 8 0 005.47 7.59c.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2 .37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.22 2.2.82a7.6 7.6 0 012-.27c.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.28.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.19 0 .21.15.46.55.38A8 8 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
-          View on GitHub
-        </a>
+        // Render Projects
+        const projContainer = document.getElementById('project-list');
+        data.projects.forEach(proj => {
+            let tagsHtml = proj.stack.map(tag => `<span class="tag">${tag}</span>`).join('');
+            projContainer.innerHTML += `
+                <a href="${proj.link}" class="item" target="_blank">
+                    <div class="item-meta">
+                         <span class="link-arrow">Code</span>
+                    </div>
+                    <div class="item-content">
+                        <h3>${proj.title}</h3>
+                        <p>${proj.desc}</p>
+                        <div class="tags">${tagsHtml}</div>
+                    </div>
+                </a>
+            `;
+        });
 
-        <a id="linkedin-btn" class="inline-flex items-center gap-2 px-4 py-2 rounded-lg border border-gray-200" target="_blank" rel="noopener">
-          <!-- LinkedIn SVG -->
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" class="muted"><path d="M4.98 3.5C4.98 4.88 3.86 6 2.49 6S0 4.88 0 3.5 1.12 1 2.49 1s2.49 1.12 2.49 2.5zM0 8.98h4.98V24H0V8.98zM8.98 8.98h4.78v2.05h.07c.67-1.26 2.31-2.6 4.75-2.6 5.08 0 6.02 3.34 6.02 7.68V24h-4.98v-7.34c0-1.75-.03-4-2.44-4-2.44 0-2.81 1.9-2.81 3.88V24H8.98V8.98z"/></svg>
-          LinkedIn
-        </a>
-      </div>
-      <p class="mt-4 muted text-sm">© <span id="copyright-year"></span> — Built for easy edits</p>
-    </section>
+        // 🆕 Render Publications
+        const pubContainer = document.getElementById('publications-list');
+        data.publications.forEach((pub, index) => {
+            // If type is link, make the whole card an <a> tag.
+            // If type is text, make it a div with an onclick event.
+            let html = '';
+            const commonContent = `
+                <div class="item-meta">${pub.date}</div>
+                <div class="item-content">
+                    <h3>${pub.title} <span style="font-size:0.8rem; font-weight:400; opacity:0.6; margin-left:10px;">↗ ${pub.source}</span></h3>
+                    <p style="font-size:0.9rem; margin:0;">${pub.type === 'text' ? 'Read article →' : 'External Link ↗'}</p>
+                </div>
+            `;
 
-  </div>
+            if (pub.type === 'link') {
+                html = `<a href="${pub.url}" target="_blank" class="item">${commonContent}</a>`;
+            } else {
+                html = `<div class="item" onclick="openPost(${index})">${commonContent}</div>`;
+            }
+            pubContainer.innerHTML += html;
+        });
 
-  <!-- Data file (edit this file) -->
-  <script src="data.js"></script>
+        // Render Skills
+        const skillContainer = document.getElementById('skills-list');
+        data.skills.forEach(skill => {
+            skillContainer.innerHTML += `<span class="tag" style="padding: 5px 12px; font-size: 0.85rem;">${skill}</span>`;
+        });
 
-  <!-- Render script: reads window.SITE_DATA and populates the page -->
-  <script>
-    (function () {
-      const d = window.SITE_DATA || {};
+        // Contact & Footer
+        document.getElementById('email-link').href = `mailto:${data.profile.email}`;
+        document.getElementById('email-link').innerText = data.profile.email;
+        
+        const socialDiv = document.getElementById('social-links');
+        if(data.profile.linkedin) socialDiv.innerHTML += `<a href="${data.profile.linkedin}" target="_blank">LinkedIn</a> / `;
+        if(data.profile.github) socialDiv.innerHTML += `<a href="${data.profile.github}" target="_blank">GitHub</a>`;
 
-      // Basic header items
-      document.getElementById('name').textContent = d.name || 'Your Name';
-      document.getElementById('tagline').textContent = d.tagline || 'Robotics & AI';
-      document.getElementById('about-text').innerHTML = d.about || '';
+        document.getElementById('year').innerText = new Date().getFullYear();
 
-      // Resume and email
-      const resumeLink = document.getElementById('resume-link');
-      if (d.resume) { resumeLink.href = d.resume; resumeLink.style.display = 'inline-block'; } else resumeLink.style.display = 'none';
+        // --- MODAL LOGIC ---
+        function openPost(index) {
+            const post = data.publications[index];
+            const modal = document.getElementById('post-modal');
+            const content = document.getElementById('modal-body-content');
+            
+            content.innerHTML = `
+                <h3>${post.title}</h3>
+                <span class="meta">Published: ${post.date} · Source: ${post.source}</span>
+                <div>${post.content}</div>
+            `;
+            
+            modal.classList.add('active');
+            document.body.style.overflow = 'hidden'; // Disable background scroll
+        }
 
-      const emailLink = document.getElementById('email-link');
-      if (d.email) { emailLink.innerHTML = `<a href="mailto:${d.email}" class="accent">${d.email}</a>`; }
+        function closeModal(event) {
+            // Close if clicked on overlay or close button
+            if (event.target.classList.contains('modal-overlay') || event.target.classList.contains('modal-close')) {
+                document.getElementById('post-modal').classList.remove('active');
+                document.body.style.overflow = 'auto'; // Enable background scroll
+            }
+        }
 
-      // Socials
-      const socials = document.getElementById('socials');
-      socials.innerHTML = '';
-      (d.socials || []).forEach(s => {
-        const a = document.createElement('a');
-        a.href = s.href;
-        a.target = '_blank';
-        a.rel = 'noopener';
-        a.className = 'inline-flex items-center gap-2 px-3 py-1 rounded-md border border-transparent hover:bg-white';
-        a.innerHTML = (s.iconSvg || '') + `<span class="muted text-sm">${s.label}</span>`;
-        socials.appendChild(a);
-      });
-
-      // Projects
-      const projectsGrid = document.getElementById('projects-grid');
-      projectsGrid.innerHTML = '';
-      (d.projects || []).forEach(p => {
-        const card = document.createElement('article');
-        card.className = 'bg-white rounded-lg p-5 card';
-        card.innerHTML = `
-          <div class="flex items-start justify-between">
-            <h3 class="text-lg font-semibold text-[var(--accent-2)]">${p.title}</h3>
-            <div class="muted text-sm">${p.date || ''}</div>
-          </div>
-          <p class="mt-2 text-gray-700">${p.summary || ''}</p>
-          ${p.tags ? `<div class="mt-3 flex flex-wrap gap-2">${p.tags.map(t=>`<span class="chip">${t}</span>`).join('')}</div>` : ''}
-          <div class="mt-4 flex gap-3">
-            ${p.link ? `<a class="text-sm accent hover:underline" href="${p.link}" target="_blank" rel="noopener">Project Link</a>` : ''}
-            ${p.repo ? `<a class="text-sm accent hover:underline" href="${p.repo}" target="_blank" rel="noopener">Repo</a>` : ''}
-          </div>
-        `;
-        projectsGrid.appendChild(card);
-      });
-
-      // Research
-      const researchList = document.getElementById('research-list');
-      researchList.innerHTML = '';
-      (d.research || []).forEach(r => {
-        const el = document.createElement('div');
-        el.className = 'bg-white p-4 rounded-lg card';
-        el.innerHTML = `
-          <div class="flex justify-between items-start">
-            <div>
-              <h4 class="font-semibold">${r.title}</h4>
-              <div class="muted text-sm">${r.venue || ''} · ${r.year || ''}</div>
-            </div>
-            <div class="text-sm"><a class="accent" href="${r.link || '#'}" target="_blank" rel="noopener">PDF / Details</a></div>
-          </div>
-          ${r.abstract ? `<p class="mt-3 text-gray-700">${r.abstract}</p>` : ''}
-        `;
-        researchList.appendChild(el);
-      });
-
-      // Books
-      const booksList = document.getElementById('books-list');
-      booksList.innerHTML = '';
-      (d.books || []).forEach(b => {
-        const el = document.createElement('div');
-        el.className = 'bg-white p-4 rounded-lg card';
-        el.innerHTML = `
-          <h4 class="font-semibold">${b.title}</h4>
-          <div class="muted text-sm">${b.publisher || ''} · ${b.year || ''}</div>
-          <p class="mt-2 text-gray-700">${b.desc || ''}</p>
-          ${b.link ? `<div class="mt-3"><a class="accent" href="${b.link}" target="_blank" rel="noopener">More</a></div>` : ''}
-        `;
-        booksList.appendChild(el);
-      });
-
-      // Experience
-      const expList = document.getElementById('experience-list');
-      expList.innerHTML = '';
-      (d.experience || []).forEach(e => {
-        const el = document.createElement('div');
-        el.className = 'bg-white p-4 rounded-lg card';
-        el.innerHTML = `
-          <div class="flex justify-between items-start">
-            <div>
-              <h4 class="font-semibold">${e.role} @ ${e.company}</h4>
-              <div class="muted text-sm">${e.period} · ${e.location || ''}</div>
-            </div>
-          </div>
-          ${e.summary ? `<ul class="mt-3 list-disc list-inside text-gray-700">${(e.summary || []).map(i=>`<li>${i}</li>`).join('')}</ul>` : ''}
-        `;
-        expList.appendChild(el);
-      });
-
-      // Blog / posts
-      const postsList = document.getElementById('posts-list');
-      postsList.innerHTML = '';
-      (d.posts || []).forEach(p => {
-        const el = document.createElement('div');
-        el.className = 'bg-white p-4 rounded-lg card';
-        el.innerHTML = `
-          <div class="flex justify-between items-start">
-            <h4 class="font-semibold">${p.title}</h4>
-            <div class="muted text-sm">${p.date || ''}</div>
-          </div>
-          <p class="mt-2 text-gray-700">${p.excerpt || ''}</p>
-          ${p.link ? `<div class="mt-3"><a class="accent" href="${p.link}" target="_blank" rel="noopener">Read more</a></div>` : ''}
-        `;
-        postsList.appendChild(el);
-      });
-
-      // contact & footer
-      const contactInfo = document.getElementById('contact-info');
-      contactInfo.innerHTML = '';
-      if (d.email) contactInfo.innerHTML += `<div>Email: <a class="accent" href="mailto:${d.email}">${d.email}</a></div>`;
-      if (d.phone) contactInfo.innerHTML += `<div>Phone: <span class="muted">${d.phone}</span></div>`;
-
-      const githubBtn = document.getElementById('github-btn');
-      if (d.github) githubBtn.href = d.github; else githubBtn.style.display = 'none';
-
-      const linkedinBtn = document.getElementById('linkedin-btn');
-      if (d.linkedin) linkedinBtn.href = d.linkedin; else linkedinBtn.style.display = 'none';
-
-      // Social icon fallbacks: if no socials are provided, show small defaults
-      if ((d.socials || []).length === 0) {
-        socials.innerHTML = `
-          <a class="accent" href="${d.github || '#'}" target="_blank">GitHub</a>
-          <a class="accent ml-3" href="${d.linkedin || '#'}" target="_blank">LinkedIn</a>
-          ${d.x ? `<a class="accent ml-3" href="${d.x}" target="_blank">X</a>` : ''}
-        `;
-      }
-
-      // copyright year
-      document.getElementById('copyright-year').textContent = new Date().getFullYear();
-    })();
-  </script>
+        // Theme Toggle
+        function toggleTheme() {
+            document.body.classList.toggle('dark-mode');
+            localStorage.setItem('theme', document.body.classList.contains('dark-mode') ? 'dark' : 'light');
+        }
+        if(localStorage.getItem('theme') === 'dark') document.body.classList.add('dark-mode');
+    </script>
 </body>
 </html>
