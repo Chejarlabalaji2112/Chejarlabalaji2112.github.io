@@ -8,6 +8,8 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@300;400;500;600;700&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
+    
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <style>
         :root {
@@ -35,66 +37,40 @@
 
         /* --- BACKGROUND CANVAS --- */
         #neural-canvas {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            z-index: -1;
-            opacity: 0.6; /* Subtle background */
+            position: fixed; top: 0; left: 0; width: 100%; height: 100%;
+            z-index: -1; opacity: 0.6;
         }
 
         /* --- LAYOUT --- */
         .container {
-            max-width: 900px;
-            margin: 0 auto;
-            padding: 0 1.5rem;
-            position: relative;
-            z-index: 1;
+            max-width: 900px; margin: 0 auto; padding: 0 1.5rem;
+            position: relative; z-index: 1;
         }
 
-        /* --- HEADER & NAV --- */
+        /* --- NAV --- */
         nav {
-            padding: 2rem 0;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            margin-bottom: 4rem;
-            backdrop-filter: blur(5px);
+            padding: 2rem 0; display: flex; justify-content: space-between; align-items: center;
+            margin-bottom: 4rem; backdrop-filter: blur(5px);
         }
         .logo { 
-            font-family: var(--font-head); 
-            font-weight: 700; 
-            font-size: 1.5rem; 
-            letter-spacing: -1px; 
+            font-family: var(--font-head); font-weight: 700; font-size: 1.5rem; letter-spacing: -1px; 
             background: linear-gradient(90deg, #fff, var(--text-muted));
-            -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            -webkit-background-clip: text; -webkit-text-fill-color: transparent;
         }
 
         /* --- HERO --- */
         .hero { margin-bottom: 6rem; position: relative; }
         
-        /* PULSE ANIMATION for Status */
         .status-badge {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            background: rgba(0, 242, 234, 0.1);
-            border: 1px solid rgba(0, 242, 234, 0.2);
-            color: var(--accent);
-            padding: 0.3rem 0.8rem;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 600;
-            margin-bottom: 1.5rem;
-            font-family: var(--font-head);
-            box-shadow: 0 0 15px rgba(0, 242, 234, 0.1);
+            display: inline-flex; align-items: center; gap: 8px;
+            background: rgba(0, 242, 234, 0.1); border: 1px solid rgba(0, 242, 234, 0.2);
+            color: var(--accent); padding: 0.3rem 0.8rem; border-radius: 50px;
+            font-size: 0.8rem; font-weight: 600; margin-bottom: 1.5rem;
+            font-family: var(--font-head); box-shadow: 0 0 15px rgba(0, 242, 234, 0.1);
         }
         .status-dot {
             width: 8px; height: 8px; background: var(--accent); border-radius: 50%;
-            box-shadow: 0 0 0 rgba(0, 242, 234, 0.7);
-            animation: pulse-dot 2s infinite;
+            box-shadow: 0 0 0 rgba(0, 242, 234, 0.7); animation: pulse-dot 2s infinite;
         }
         @keyframes pulse-dot {
             0% { box-shadow: 0 0 0 0 rgba(0, 242, 234, 0.7); }
@@ -103,130 +79,108 @@
         }
 
         .hero h1 {
-            font-family: var(--font-head);
-            font-size: 3.5rem;
-            font-weight: 700;
-            line-height: 1.1;
-            margin-bottom: 1.5rem;
-            letter-spacing: -1.5px;
+            font-family: var(--font-head); font-size: 3.5rem; font-weight: 700;
+            line-height: 1.1; margin-bottom: 1.5rem; letter-spacing: -1.5px;
             animation: slideUp 0.8s ease-out forwards;
         }
         .hero p {
-            font-size: 1.2rem;
-            color: var(--text-muted);
-            max-width: 650px;
-            animation: slideUp 0.8s ease-out 0.2s forwards;
-            opacity: 0;
+            font-size: 1.2rem; color: var(--text-muted); max-width: 650px;
+            animation: slideUp 0.8s ease-out 0.2s forwards; opacity: 0;
         }
 
         /* --- SECTIONS --- */
         .section { margin-bottom: 6rem; }
         h2 {
-            font-family: var(--font-head);
-            font-size: 1rem;
-            text-transform: uppercase;
-            letter-spacing: 2px;
-            color: var(--text-muted);
-            margin-bottom: 2rem;
-            display: flex;
-            align-items: center;
+            font-family: var(--font-head); font-size: 1rem; text-transform: uppercase;
+            letter-spacing: 2px; color: var(--text-muted); margin-bottom: 2rem;
+            display: flex; align-items: center;
         }
-        h2::after {
-            content: ''; flex: 1; height: 1px; background: var(--glass-border); margin-left: 1rem;
-        }
+        h2::after { content: ''; flex: 1; height: 1px; background: var(--glass-border); margin-left: 1rem; }
 
         /* --- GLASS CARDS --- */
         .grid-list { display: grid; gap: 1rem; }
         
         .item {
-            display: grid;
-            grid-template-columns: 1fr 3fr;
-            gap: 2rem;
-            padding: 2rem;
-            background: var(--glass-bg);
-            backdrop-filter: blur(12px);
-            -webkit-backdrop-filter: blur(12px);
-            border: 1px solid var(--glass-border);
-            border-radius: 16px;
+            display: grid; grid-template-columns: 1fr 3fr; gap: 2rem; padding: 2rem;
+            background: var(--glass-bg); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border); border-radius: 16px;
             transition: all 0.3s cubic-bezier(0.25, 0.8, 0.25, 1);
-            text-decoration: none;
-            color: inherit;
-            position: relative;
-            overflow: hidden;
+            text-decoration: none; color: inherit; position: relative; overflow: hidden;
+            cursor: pointer;
         }
-
-        /* CARD HOVER EFFECT */
         .item:hover {
-            transform: translateY(-3px);
-            background: var(--card-hover);
-            border-color: var(--accent);
-            box-shadow: 0 10px 30px -10px rgba(0, 242, 234, 0.15);
+            transform: translateY(-3px); background: var(--card-hover);
+            border-color: var(--accent); box-shadow: 0 10px 30px -10px rgba(0, 242, 234, 0.15);
         }
-        
-        /* Subtle glow line on hover */
         .item::before {
             content: ''; position: absolute; top: 0; left: 0; width: 2px; height: 100%;
             background: var(--accent); opacity: 0; transition: opacity 0.3s;
         }
         .item:hover::before { opacity: 1; }
 
-        .item-meta { 
-            font-size: 0.9rem; color: var(--text-muted); font-family: var(--font-head); font-weight: 500; 
-        }
-        .item-content h3 { 
-            font-size: 1.3rem; margin-bottom: 0.5rem; color: #fff; font-family: var(--font-head);
-        }
+        .item-meta { font-size: 0.9rem; color: var(--text-muted); font-family: var(--font-head); font-weight: 500; }
+        .item-content h3 { font-size: 1.3rem; margin-bottom: 0.5rem; color: #fff; font-family: var(--font-head); }
         .item-content p { color: var(--text-muted); font-size: 0.95rem; margin-bottom: 0.75rem; }
 
-        /* SKILL TAGS */
         .tags { display: flex; flex-wrap: wrap; gap: 0.6rem; margin-top: 1rem; }
         .tag {
-            font-size: 0.75rem; 
-            padding: 4px 10px;
-            border-radius: 4px; 
-            background: rgba(255,255,255,0.05);
-            border: 1px solid var(--glass-border);
-            color: var(--text-muted);
-            font-family: var(--font-head);
-            transition: 0.2s;
+            font-size: 0.75rem; padding: 4px 10px; border-radius: 4px; 
+            background: rgba(255,255,255,0.05); border: 1px solid var(--glass-border);
+            color: var(--text-muted); font-family: var(--font-head); transition: 0.2s;
         }
         .item:hover .tag { border-color: rgba(0, 242, 234, 0.3); color: var(--accent); }
 
-        /* --- MODAL --- */
+        /* --- MODAL & MARKDOWN STYLING --- */
         .modal-overlay {
             position: fixed; top: 0; left: 0; width: 100%; height: 100%;
-            background: rgba(0,0,0,0.8); backdrop-filter: blur(8px);
+            background: rgba(0,0,0,0.8); backdrop-filter: blur(15px);
             z-index: 100; display: none; justify-content: center; align-items: center;
             opacity: 0; transition: opacity 0.3s;
         }
         .modal-overlay.active { display: flex; opacity: 1; }
+        
         .modal-content {
-            background: #111; border: 1px solid var(--glass-border);
-            width: 90%; max-width: 700px; padding: 3rem; border-radius: 16px;
+            background: #0f0f0f; border: 1px solid var(--glass-border);
+            width: 90%; max-width: 800px; padding: 3rem; border-radius: 16px;
             max-height: 85vh; overflow-y: auto; color: var(--text-muted);
-            position: relative;
+            position: relative; box-shadow: 0 25px 50px -12px rgba(0,0,0,0.5);
         }
+        
+        /* Markdown Specifics */
+        .markdown-body { font-family: 'Inter', sans-serif; line-height: 1.8; color: #d1d5db; }
+        .markdown-body h1 { color: #fff; font-size: 2rem; margin-bottom: 1.5rem; font-family: var(--font-head); border-bottom: 1px solid var(--glass-border); padding-bottom: 1rem; }
+        .markdown-body h2 { color: #fff; margin-top: 2rem; margin-bottom: 1rem; font-family: var(--font-head); }
+        .markdown-body p { margin-bottom: 1.2rem; }
+        .markdown-body code { background: rgba(0, 242, 234, 0.1); padding: 2px 6px; border-radius: 4px; font-family: monospace; color: var(--accent); font-size: 0.9em; }
+        .markdown-body pre { background: #000; padding: 1.5rem; border-radius: 8px; overflow-x: auto; border: 1px solid var(--glass-border); margin: 1.5rem 0; }
+        .markdown-body pre code { background: transparent; padding: 0; color: #a1a1aa; }
+        .markdown-body blockquote { border-left: 3px solid var(--accent); padding-left: 1.5rem; color: #fff; font-style: italic; background: rgba(255,255,255,0.03); padding: 1rem; border-radius: 0 8px 8px 0; }
+        
         .modal-close {
             position: absolute; top: 1.5rem; right: 1.5rem; background: none; border: none;
-            color: #fff; font-size: 1.5rem; cursor: pointer;
+            color: #fff; font-size: 2rem; cursor: pointer; transition: color 0.2s;
         }
+        .modal-close:hover { color: var(--accent); }
+
+        /* Loader */
+        .spinner {
+            border: 3px solid rgba(255,255,255,0.1); border-radius: 50%; 
+            border-top: 3px solid var(--accent); width: 30px; height: 30px; 
+            animation: spin 1s linear infinite; margin: 3rem auto; display: block;
+        }
+        @keyframes spin { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
 
         /* --- FOOTER & UTILS --- */
-        footer { 
-            text-align: center; padding: 4rem 0; font-size: 0.85rem; color: var(--text-muted); border-top: 1px solid var(--glass-border); margin-top: 4rem; 
-        }
+        footer { text-align: center; padding: 4rem 0; font-size: 0.85rem; color: var(--text-muted); border-top: 1px solid var(--glass-border); margin-top: 4rem; }
         a { color: inherit; text-decoration: none; transition: color 0.2s; }
         a:hover { color: var(--accent); }
-        
-        @keyframes slideUp {
-            from { opacity: 0; transform: translateY(20px); }
-            to { opacity: 1; transform: translateY(0); }
-        }
+        @keyframes slideUp { from { opacity: 0; transform: translateY(20px); } to { opacity: 1; transform: translateY(0); } }
 
         /* Responsive */
         @media (max-width: 768px) {
             .item { grid-template-columns: 1fr; gap: 0.5rem; }
             .hero h1 { font-size: 2.5rem; }
+            .modal-content { padding: 1.5rem; }
         }
     </style>
 </head>
@@ -262,7 +216,7 @@
         </section>
 
         <section class="section">
-            <h2>Publications</h2>
+            <h2>Publications & Notes</h2>
             <div class="grid-list" id="publications-list"></div>
         </section>
 
@@ -273,7 +227,7 @@
 
         <section id="contact" class="section">
             <h2>Communication Link</h2>
-            <div class="item" style="grid-template-columns: 1fr; text-align: center; padding: 3rem;">
+            <div class="item" style="grid-template-columns: 1fr; text-align: center; padding: 3rem; cursor: default;">
                 <h3 style="color:white; margin-bottom:1rem; font-family: var(--font-head);">Let's Build the Future</h3>
                 <p style="margin-bottom: 2rem;">Open for collaborations on Neuro-symbolic AI and Robotics.</p>
                 <a id="email-link" style="font-size: 1.2rem; font-weight: 600; color: var(--accent);"></a>
@@ -289,136 +243,224 @@
     <div class="modal-overlay" id="post-modal" onclick="closeModal(event)">
         <div class="modal-content">
             <button class="modal-close" onclick="closeModal(event)">×</button>
-            <div id="modal-body-content"></div>
+            <div id="modal-body-content" class="markdown-body">
+                </div>
         </div>
     </div>
 
     <script>
-        /* =================================================================
-           CONFIGURATION
-           =================================================================
-        */
-        const portfolioData = {
-            featured: [
-                { title: "MuJoCo Digital Twins", desc: "Reduced LeRobot data collection time by 70% using synthetic environments.", tag: "Engineering" },
-                { title: "Causal Robotics", desc: "Implementing JEPA architectures for low-compute robotic arms.", tag: "Research" }
-            ],
-            research: [
-                { title: "Vision Language Action (VLA)", desc: "Fine-tuning multimodal models for robotic manipulation tasks.", year: "2025" },
-                { title: "Adaptive Speech Recognition", desc: "Real-time learning rate adaptation for CPU-constrained environments.", year: "2024" }
-            ],
-            
-            // ⬇️ UPDATED: Use relative paths to your "posts" folder
-            posts: [
-                { 
-                    id: 1, 
-                    title: "The Future of World Models", 
-                    date: "Nov 2025", 
-                    url: "posts/world-models.md"  // <--- Look here
-                },
-                { 
-                    id: 2, 
-                    title: "Why LLMs Struggle with Causal Reasoning", 
-                    date: "Oct 2025", 
-                    url: "posts/causal-ai.md"     // <--- Look here
-                }
-            ]
-        };
-
-        /* =================================================================
-           LOGIC: Tab Switching & Fetching
-           =================================================================
-        */
-
-        function renderLists() {
-            // ... (Same rendering logic as before for featured/research) ...
-            const featContainer = document.getElementById('featured-list');
-            portfolioData.featured.forEach(item => {
-                featContainer.innerHTML += `
-                    <div class="card">
-                        <div class="card-meta">${item.tag}</div>
-                        <h3>${item.title}</h3>
-                        <p>${item.desc}</p>
-                    </div>`;
-            });
-
-            const resContainer = document.getElementById('research-list');
-            portfolioData.research.forEach(item => {
-                resContainer.innerHTML += `
-                    <div class="card">
-                        <div class="card-meta">${item.year}</div>
-                        <h3>${item.title}</h3>
-                        <p>${item.desc}</p>
-                    </div>`;
-            });
-
-            // Writing Index
-            const writeContainer = document.getElementById('writing-list');
-            portfolioData.posts.forEach(post => {
-                writeContainer.innerHTML += `
-                    <div class="card" onclick="fetchPost('${post.url}')">
-                        <div class="card-meta">${post.date}</div>
-                        <h3>${post.title} →</h3>
-                    </div>`;
-            });
+        /* ================================================
+           1. CANVAS ANIMATION ENGINE 
+           ================================================ */
+        const canvas = document.getElementById('neural-canvas');
+        const ctx = canvas.getContext('2d');
+        let particles = [];
+        
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
         }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
 
-        function switchTab(tabId) {
-            document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
-            event.target.classList.add('active');
-            document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
-            document.getElementById(tabId).classList.add('active');
-        }
-
-        // ⬇️ REAL FETCH LOGIC
-        async function fetchPost(url) {
-            const viewer = document.getElementById('writing-viewer');
-            const renderArea = document.getElementById('markdown-render');
-            const loading = document.getElementById('loading');
-
-            // Switch View
-            document.getElementById('writing-index').style.display = 'none';
-            viewer.style.display = 'block';
-            loading.style.display = 'block';
-            renderArea.innerHTML = '';
-
-            try {
-                // This fetches the file relative to index.html
-                const response = await fetch(url);
-
-                if (!response.ok) {
-                    throw new Error(`HTTP error! status: ${response.status}`);
-                }
-
-                const text = await response.text();
-                
-                // Convert Markdown to HTML
-                renderArea.innerHTML = marked.parse(text);
-            } catch (error) {
-                renderArea.innerHTML = `
-                    <div style="color: #ff6b6b; padding: 1rem; border: 1px solid #ff6b6b; border-radius: 8px;">
-                        <h3>Error Loading Post</h3>
-                        <p>Could not load: <code>${url}</code></p>
-                        <p>Details: ${error.message}</p>
-                        <br>
-                        <p style="font-size: 0.9rem; opacity: 0.8;">
-                            <strong>Note:</strong> If you are opening index.html directly from your folder 
-                            (file://), this won't work due to browser security (CORS). 
-                            You must use a local server or host on GitHub Pages.
-                        </p>
-                    </div>`;
-            } finally {
-                loading.style.display = 'none';
+        class Particle {
+            constructor() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.vx = (Math.random() - 0.5) * 0.5;
+                this.vy = (Math.random() - 0.5) * 0.5;
+                this.size = Math.random() * 2;
+            }
+            update() {
+                this.x += this.vx; this.y += this.vy;
+                if (this.x < 0 || this.x > canvas.width) this.vx *= -1;
+                if (this.y < 0 || this.y > canvas.height) this.vy *= -1;
+            }
+            draw() {
+                ctx.fillStyle = 'rgba(0, 242, 234, 0.5)';
+                ctx.beginPath(); ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2); ctx.fill();
             }
         }
 
-        function closePost() {
-            document.getElementById('writing-viewer').style.display = 'none';
-            document.getElementById('writing-index').style.display = 'block';
+        function initParticles() {
+            particles = [];
+            const count = window.innerWidth < 768 ? 40 : 80;
+            for (let i = 0; i < count; i++) particles.push(new Particle());
         }
 
-        // Init
-        renderLists();
+        function animate() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update(); particles[i].draw();
+                for (let j = i; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const distance = Math.sqrt(dx * dx + dy * dy);
+                    if (distance < 150) {
+                        ctx.beginPath();
+                        ctx.strokeStyle = `rgba(0, 242, 234, ${0.15 - distance/1000})`;
+                        ctx.lineWidth = 1; ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y); ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animate);
+        }
+        initParticles(); animate();
+
+
+        /* ================================================
+           2. DATA & LOGIC 
+           ================================================ */
+        const data = {
+            profile: {
+                name: "Balaji Chejarla",
+                role: "Agentic AI & Robotics Researcher",
+                about: "Architecting the next generation of adaptive intelligence. Specializing in Neuro-symbolic AI, Cognitive Architectures, and World Models.",
+                email: "balajichejarla02@gmail.com",
+                linkedin: "https://linkedin.com",
+                github: "https://github.com"
+            },
+            experience: [
+                {
+                    role: "Robotics Software Engineer Trainee",
+                    company: "BotForge Labs (IIT Madras)",
+                    period: "May '25 - Aug '25",
+                    desc: "Fine-tuned VLA models and engineered MuJoCo digital twins for real-time validation, reducing data collection cycles by 70%."
+                },
+                {
+                    role: "Independent Researcher",
+                    company: "Self-Guided",
+                    period: "Current",
+                    desc: "Investigating JEPA and NARS architectures to solve causal reasoning limitations in current LLMs."
+                }
+            ],
+            projects: [
+                {
+                    title: "Personalized Companion Robot",
+                    stack: ["ROS2", "LangChain", "C++"],
+                    desc: "Adaptive robot with voice-to-voice communication, utilizing causal understanding to ensure genuine, non-scripted interaction.",
+                    link: "#"
+                },
+                {
+                    title: "Adaptive Speech Emotion Recog.",
+                    stack: ["TensorFlow", "Python"],
+                    desc: "Dynamic feedback mechanism improving accuracy by 7% via real-time learning rate adaptation.",
+                    link: "#"
+                }
+            ],
+            // ⬇️ UPDATE THIS with your real filenames
+            publications: [
+                {
+                    title: "The Future of World Models in Robotics",
+                    date: "Draft",
+                    type: "internal", 
+                    url: "posts/world-models.md" // Path to your markdown file
+                },
+                {
+                    title: "Understanding Neuro-symbolic AI",
+                    date: "Oct 2024",
+                    type: "external",
+                    url: "https://medium.com" // External link
+                }
+            ],
+            skills: ["Python", "C++", "TensorFlow", "ROS2", "Gazebo", "MuJoCo", "LeRobot", "Git", "Agentic AI"]
+        };
+
+        // --- RENDERERS ---
+        document.getElementById('profile-name').innerText = data.profile.name;
+        document.getElementById('profile-intro').innerText = data.profile.about;
+
+        // Experience
+        const expContainer = document.getElementById('experience-list');
+        data.experience.forEach(job => {
+            expContainer.innerHTML += `
+                <div class="item" style="cursor: default;">
+                    <div class="item-meta">${job.period}</div>
+                    <div class="item-content">
+                        <h3>${job.role}</h3>
+                        <p style="color:var(--accent); font-size:0.9rem; margin-bottom:0.5rem;">${job.company}</p>
+                        <p>${job.desc}</p>
+                    </div>
+                </div>`;
+        });
+
+        // Projects
+        const projContainer = document.getElementById('project-list');
+        data.projects.forEach(proj => {
+            let tags = proj.stack.map(t => `<span class="tag">${t}</span>`).join('');
+            projContainer.innerHTML += `
+                <a href="${proj.link}" class="item" target="_blank">
+                    <div class="item-meta">Code Base ↗</div>
+                    <div class="item-content">
+                        <h3>${proj.title}</h3>
+                        <p>${proj.desc}</p>
+                        <div class="tags">${tags}</div>
+                    </div>
+                </a>`;
+        });
+
+        // Publications (With Post Logic)
+        const pubContainer = document.getElementById('publications-list');
+        data.publications.forEach((pub, i) => {
+            let content = `
+                <div class="item-meta">${pub.date}</div>
+                <div class="item-content">
+                    <h3>${pub.title}</h3>
+                    <p style="font-size:0.9rem;">${pub.type === 'internal' ? 'Read Article →' : 'External Link ↗'}</p>
+                </div>`;
+            
+            if(pub.type === 'external') {
+                pubContainer.innerHTML += `<a href="${pub.url}" target="_blank" class="item">${content}</a>`;
+            } else {
+                // Calls the fetch function
+                pubContainer.innerHTML += `<div class="item" onclick="openPost(${i})">${content}</div>`;
+            }
+        });
+
+        document.getElementById('skills-list').innerHTML = data.skills.map(s => `<span class="tag">${s}</span>`).join('');
+
+        // Contact
+        const el = document.getElementById('email-link'); el.href = "mailto:" + data.profile.email; el.innerText = data.profile.email;
+        document.getElementById('social-links').innerHTML = `<a href="${data.profile.linkedin}">LinkedIn</a> &nbsp;/&nbsp; <a href="${data.profile.github}">GitHub</a>`;
+        document.getElementById('year').innerText = new Date().getFullYear();
+
+
+        // --- MODAL & FETCH LOGIC ---
+        async function openPost(index) {
+            const pub = data.publications[index];
+            const modal = document.getElementById('post-modal');
+            const contentDiv = document.getElementById('modal-body-content');
+            
+            // 1. Show Modal & Spinner
+            modal.classList.add('active');
+            contentDiv.innerHTML = '<div class="spinner"></div>';
+
+            try {
+                // 2. Fetch the Markdown file
+                const response = await fetch(pub.url);
+                
+                if (!response.ok) throw new Error(`Status ${response.status}`);
+                
+                const text = await response.text();
+                
+                // 3. Render HTML using Marked.js
+                contentDiv.innerHTML = marked.parse(text);
+
+            } catch (error) {
+                // Error Handling
+                contentDiv.innerHTML = `
+                    <h2 style="color:#ff5555">Error Loading Post</h2>
+                    <p>Could not load: <code>${pub.url}</code></p>
+                    <p style="font-size:0.9rem; color:#666">Make sure you are running this on a Local Server (localhost) or GitHub Pages. Browsers block local file fetching (file://) for security.</p>
+                `;
+            }
+        }
+
+        function closeModal(e) {
+            if(e.target.classList.contains('modal-overlay') || e.target.classList.contains('modal-close'))
+                document.getElementById('post-modal').classList.remove('active');
+        }
     </script>
 </body>
 </html>
