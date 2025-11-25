@@ -117,38 +117,32 @@
             background: var(--accent); opacity: 0; transition: opacity 0.3s;
         }
         .item:hover::before { opacity: 1; }
-        .item img {
+        /* --- RESPONSIVE THUMBNAILS --- */
+        .item-thumbnail {
             width: 100%;
-            height: 140px;      /* uniform height */
+            height: 140px;          /* Desktop height */
             object-fit: cover;
             border-radius: 12px;
+            transition: 0.25s ease;
         }
-        /* --- RESPONSIVE THUMBNAILS --- */
-.item-thumbnail {
-    width: 100%;
-    height: 140px;          /* Desktop height */
-    object-fit: cover;
-    border-radius: 12px;
-    transition: 0.25s ease;
-}
-
-/* Hover zoom effect (optional, looks great with glass UI) */
-.item:hover .item-thumbnail {
-    transform: scale(1.03);
-}
-
-/* Tablet breakpoint */
-@media (max-width: 900px) {
-    .item-thumbnail {
-        height: 120px;
-    }
-}
-
-/* Mobile breakpoint */
-@media (max-width: 768px) {
-    .item-thumbnail {
-        height: 200px;       /* Makes image larger since it becomes full width */
-    }
+        
+        /* Hover zoom effect (optional, looks great with glass UI) */
+        .item:hover .item-thumbnail {
+            transform: scale(1.03);
+        }
+        
+        /* Tablet breakpoint */
+        @media (max-width: 900px) {
+            .item-thumbnail {
+                height: 120px;
+            }
+        }
+        
+        /* Mobile breakpoint */
+        @media (max-width: 768px) {
+            .item-thumbnail {
+                height: 200px;       /* Makes image larger since it becomes full width */
+            }
 
     /* Mobile layout becomes vertical instead of side-by-side */
     .item {
@@ -394,14 +388,14 @@
             publications: [
                 {
                     title: "The Big Picture of AI: Beyond Hacks and Shortcuts",
-                    image: "images/TBP.png"
+                    image: "images/TBP.png",
                     date: "Sep 2025",
                     type: "internal",
                     url: "posts/The-Big-Picture-of-AI%3A-Beyond-Hacks-and-Shortcuts"// External link
                 },
                 {
                     title: "Why LLMs Should Avoid Subjective Adjectives",
-                    image: "images/WLS.png"
+                    image: "images/WLS.png",
                     date: "Aug 2025",
                     type: "internal", 
                     url: "posts/Why-LLMs-Should-Avoid-Subjective-Adjectives.md" // Path to your markdown file
