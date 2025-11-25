@@ -117,6 +117,45 @@
             background: var(--accent); opacity: 0; transition: opacity 0.3s;
         }
         .item:hover::before { opacity: 1; }
+        .item img {
+            width: 100%;
+            height: 140px;      /* uniform height */
+            object-fit: cover;
+            border-radius: 12px;
+        }
+        /* --- RESPONSIVE THUMBNAILS --- */
+.item-thumbnail {
+    width: 100%;
+    height: 140px;          /* Desktop height */
+    object-fit: cover;
+    border-radius: 12px;
+    transition: 0.25s ease;
+}
+
+/* Hover zoom effect (optional, looks great with glass UI) */
+.item:hover .item-thumbnail {
+    transform: scale(1.03);
+}
+
+/* Tablet breakpoint */
+@media (max-width: 900px) {
+    .item-thumbnail {
+        height: 120px;
+    }
+}
+
+/* Mobile breakpoint */
+@media (max-width: 768px) {
+    .item-thumbnail {
+        height: 200px;       /* Makes image larger since it becomes full width */
+    }
+
+    /* Mobile layout becomes vertical instead of side-by-side */
+    .item {
+        grid-template-columns: 1fr !important;
+    }
+}
+
 
         .item-meta { font-size: 0.9rem; color: var(--text-muted); font-family: var(--font-head); font-weight: 500; }
         .item-content h3 { font-size: 1.3rem; margin-bottom: 0.5rem; color: #fff; font-family: var(--font-head); }
@@ -357,7 +396,7 @@
                     title: "The Big Picture of AI: Beyond Hacks and Shortcuts",
                     image: "images/TBP.png"
                     date: "Sep 2025",
-                    type: "external",
+                    type: "internal",
                     url: "posts/The-Big-Picture-of-AI%3A-Beyond-Hacks-and-Shortcuts"// External link
                 },
                 {
@@ -390,37 +429,58 @@
         });
 
         // Projects
+                // Projects
         const projContainer = document.getElementById('project-list');
         data.projects.forEach(proj => {
             let tags = proj.stack.map(t => `<span class="tag">${t}</span>`).join('');
+        
             projContainer.innerHTML += `
-                <a href="${proj.link}" class="item" target="_blank">
-                    <div class="item-meta">Code Base ↗</div>
+                <div class="item" style="grid-template-columns: 150px 1fr;">
+                    <img src="${proj.image}" class="item-thumbnail" />
+
+        
                     <div class="item-content">
                         <h3>${proj.title}</h3>
+                        <p class="item-meta" style="margin-bottom:0.5rem;">Project</p>
                         <p>${proj.desc}</p>
                         <div class="tags">${tags}</div>
+                        <a href="${proj.link}" target="_blank"
+                           style="display:block; margin-top:1rem; color:var(--accent); font-weight:600;">
+                            Codebase ↗
+                        </a>
                     </div>
-                </a>`;
-        });
-
-        // Publications (With Post Logic)
-        const pubContainer = document.getElementById('publications-list');
-        data.publications.forEach((pub, i) => {
-            let content = `
-                <div class="item-meta">${pub.date}</div>
-                <div class="item-content">
-                    <h3>${pub.title}</h3>
-                    <p style="font-size:0.9rem;">${pub.type === 'internal' ? 'Read Article →' : 'External Link ↗'}</p>
                 </div>`;
-            
-            if(pub.type === 'external') {
-                pubContainer.innerHTML += `<a href="${pub.url}" target="_blank" class="item">${content}</a>`;
+        });
+        
+        
+                // Publications (With Post Logic)
+        // Publications
+        const pubContainer = document.getElementById('publications-list');
+        
+        data.publications.forEach((pub, i) => {
+            let baseCard = `
+                <div class="item" style="grid-template-columns:150px 1fr;" 
+                     ${pub.type === 'internal' ? `onclick="openPost(${i})"` : ''}>
+                    
+                    <img src="${pub.image}" class="item-thumbnail" />
+
+        
+                    <div class="item-content">
+                        <h3>${pub.title}</h3>
+                        <div class="item-meta" style="margin: 0.3rem 0 0.8rem 0;">${pub.date}</div>
+                        <p style="font-size:0.9rem;">
+                            ${pub.type === 'internal' ? 'Read Article →' : 'External Link ↗'}
+                        </p>
+                    </div>
+                </div>`;
+        
+            if (pub.type === 'external') {
+                pubContainer.innerHTML += `<a href="${pub.url}" target="_blank" class="item">${baseCard}</a>`;
             } else {
-                // Calls the fetch function
-                pubContainer.innerHTML += `<div class="item" onclick="openPost(${i})">${content}</div>`;
+                pubContainer.innerHTML += baseCard;
             }
         });
+
 
         document.getElementById('skills-list').innerHTML = data.skills.map(s => `<span class="tag">${s}</span>`).join('');
 
