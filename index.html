@@ -12,6 +12,7 @@
     <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
 
     <style>
+        
         :root {
             --bg-body: #0a0a0a;
             --text-main: #ffffff;
@@ -215,6 +216,17 @@
             .hero h1 { font-size: 2.5rem; }
             .modal-content { padding: 1.5rem; }
         }
+
+        /* Markdown images – FIX OVERSIZED IMAGES */
+        .markdown-body img {
+            max-width: 100%;
+            height: auto;
+            display: block;
+            margin: 1.8rem auto;
+            border-radius: 14px;
+            box-shadow: 0 12px 35px rgba(0,0,0,0.45);
+        }
+
     </style>
 </head>
 <body>
